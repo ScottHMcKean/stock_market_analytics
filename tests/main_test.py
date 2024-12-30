@@ -1,8 +1,18 @@
 from stock_market_analytics.data import fetch_ticker_info, get_info_sdf
+import pytest
+from pyspark.sql import SparkSession
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="session")
 def spark():
-    return SparkSession.builder.appName("UnitTest").getOrCreate()
+    spark = SparkSession.builder \
+        .master("local") \
+        .appName("unit-tests") \
+        .config("spark.executor.cores", "1") \
+        .config("spark.executor.instances", "1") \
+        .config("spark.sql.shuffle.partitions", "1") \
+        .getOrCreate()
+    yield spark
+    spark.stop()
 
 def test_fetch_ticker_info():
     with patch('yfinance.Ticker') as mock_ticker:

@@ -3,7 +3,7 @@ resources:
   pipelines:
     stock_market_analytics_pipeline:
       name: stock_market_analytics_pipeline
-      catalog: goldingdev
+      catalog: shm
       target: stock_market_analytics_${bundle.target}
       libraries:
         - notebook:
