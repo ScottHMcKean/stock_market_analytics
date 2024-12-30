@@ -1,0 +1,13 @@
+# The main pipeline for stock_market_analytics
+resources:
+  pipelines:
+    stock_market_analytics_pipeline:
+      name: stock_market_analytics_pipeline
+      catalog: goldingdev
+      target: stock_market_analytics_${bundle.target}
+      libraries:
+        - notebook:
+            path: ../src/dlt_pipeline.ipynb
+
+      configuration:
+        bundle.sourcePath: ${workspace.file_path}/src
