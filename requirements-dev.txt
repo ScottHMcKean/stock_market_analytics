@@ -8,6 +8,7 @@ databricks-dlt
 
 ## pytest is the default package used for testing
 pytest
+pytest-mock
 
 ## Dependencies for building wheel files
 setuptools
