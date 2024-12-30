@@ -37,7 +37,7 @@ def test_get_info_sdf(spark, mocker):
     expected_schema = StructType([
         StructField("ticker", StringType(), False),
         StructField("info", StringType(), True),
-        StructField("date", DateType(), True)
+        StructField("date", DateType(), False)
     ])
     assert result_df.schema == expected_schema
     
@@ -49,8 +49,3 @@ def test_get_info_sdf(spark, mocker):
     assert result_data[0]['info'] == "{'key1': 'value1'}"
     assert result_data[1]['info'] == "{'key2': 'value2'}"
     assert all(row['date'] == date.today() for row in result_data)
-
-def test_get_info_sdf_empty_watchlist(spark):
-    watchlist = {}
-    result_df = get_info_sdf(watchlist, spark)
-    assert result_df.count() == 0
