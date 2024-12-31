@@ -4,8 +4,15 @@ from pyspark.sql.types import StructType, StructField, StringType, DateType
 from datetime import date
 from stock_market_analytics.data import fetch_ticker_info, get_info_sdf
 
+import os
+
+def is_running_in_databricks():
+    return "DATABRICKS_RUNTIME_VERSION" in os.environ
+
 @pytest.fixture(scope="module")
 def spark():
+    if is_running_in_databricks():
+        return spark
     return SparkSession.builder.master("local").appName("test").getOrCreate()
 
 def test_fetch_ticker_info(mocker):
